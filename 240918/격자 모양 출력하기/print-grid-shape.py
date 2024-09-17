@@ -11,7 +11,7 @@ for row in range(n):
         col_idx = grid[row][col+1] - 1
         chk[row_idx][col_idx] = (row_idx + 1) * (col_idx + 1)
 
-for row in range(m):
+for row in range(n):
     for col in range(n):
         print(chk[row][col], end=' ')
     print()
