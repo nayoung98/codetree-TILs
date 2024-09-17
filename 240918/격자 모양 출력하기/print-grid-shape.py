@@ -3,16 +3,7 @@ import sys
 input = sys.stdin.readline
 n, m = map(int, input().split())
 grid = [list(map(int, input().split())) for _ in range(m)]
-chk = [[0] * n for _ in range(m)]
-
-# print(grid[0][0]) # 1
-# print(grid[0][1]) # 1
-
-# print(grid[1][0]) # 3
-# print(grid[1][1]) # 2
-
-# print(grid[2][0]) # 3
-# print(grid[2][1]) # 3
+chk = [[0] * n for _ in range(n)]
 
 for row in range(n):
     for col in range(1):
