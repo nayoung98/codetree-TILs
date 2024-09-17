@@ -11,13 +11,10 @@ for rule in rules:
     else:
         rule_cnt += 1
 
-# print(A[rule_cnt:])
-# print(A[:rule_cnt])
-
 if rule_cnt < 0:
     rule_cnt = abs(rule_cnt)
     print(A[rule_cnt:] + A[:rule_cnt])
 elif rule_cnt > 0:
-    print(A[:rule_cnt] + A[rule_cnt:])
+    print(A[-rule_cnt:] + A[:-rule_cnt])
 else:
     print(A)
