@@ -11,6 +11,7 @@ for rule in rules:
     else:
         rule_cnt += 1
 
+rule_cnt %= len(A) # 문자열 보다 큰 경우 나머지 연산으로 길이 줄임
 if rule_cnt < 0:
     rule_cnt = abs(rule_cnt)
     print(A[rule_cnt:] + A[:rule_cnt])
