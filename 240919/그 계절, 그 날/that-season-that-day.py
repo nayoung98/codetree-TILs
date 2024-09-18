@@ -21,7 +21,7 @@ def weather(Y, M, D):
                 result = 'Summer'
             elif M >= 9 and M <= 11:
                 result = 'Fall'
-            elif M == 11 or M == 1 or M == 2:
+            elif M == 12 or M == 1 or M == 2:
                 result = 'Winter'
         else:
             result = -1
@@ -43,10 +43,11 @@ def weather(Y, M, D):
                 result = 'Summer'
             elif M >= 9 and M <= 11:
                 result = 'Fall'
-            elif M == 11 or M == 1 or M == 2:
+            elif M == 12 or M == 1 or M == 2:
                 result = 'Winter'
         else:
             result = -1
+
     return result
 
 print(weather(Y, M, D))
