@@ -9,7 +9,6 @@ n = int(origin_n)
 num = 0
 for i in range(len(origin_n)-1, -1, -1):
    num += a ** i
-print(num)
 
 # 10진수 -> b진수
 ans_list = []
