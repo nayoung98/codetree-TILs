@@ -4,32 +4,33 @@ input = sys.stdin.readline
 m1, d1, m2, d2 = map(int, input().split())
 A = input().rstrip()
 
+# 요일 인덱스 매핑
 days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-target_day_idx = days.index(A)
+target_day_index = days.index(A)
 
-current_day_idx = 0 
-current_month = m1
-current_day = d1
-cnt = 0
+# 2024년의 각 월별 일수 설정
+month_days = [0, 31, 29, 31, 30, 31, 30, 31, 30, 31, 30, 31]
 
-def chk_month(m1):
-    if m1 == 2:
-        return 29
-    elif m1 == 1 or m1 == 3 or m1 == 5 or m1 == 7 or m1 == 8 or m1 == 10 or m1 == 12:
-        return 31
-    else:
-        return 30
+# 현재 요일 인덱스 초기화
+current_day_index = 0  # 2024년 1월 1일은 월요일
 
-while not (current_month == m2 and current_day == d2 + 1):
+# 특정 요일 카운트
+count = 0
 
-    if current_day_idx == target_day_idx:
-        cnt += 1
+# 시작 날짜부터 끝 날짜까지 반복
+while not (m1 == m2 and d1 == d2 + 1):  # m2월 d2일을 포함하기 위해 d1은 d2 + 1보다 작아야 함
+    # 목표 요일인지 확인
+    if current_day_index == target_day_index:
+        count += 1
 
-    current_day += 1
-    current_day_idx = (current_day_idx + 1) % 7  
+    # 날짜 증가
+    d1 += 1
+    current_day_index = (current_day_index + 1) % 7  # 다음 요일로 변경
 
-    if current_day > chk_month(m1):
-        current_day = 1
-        current_month += 1
+    # 다음 날이 해당 월의 마지막 날이면 월을 증가
+    if d1 > month_days[m1]:
+        d1 = 1
+        m1 += 1
 
-print(cnt)
+# 결과 출력
+print(count)
