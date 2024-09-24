@@ -6,18 +6,18 @@ origin_n = input().rstrip()
 
 # a진수 -> 10진수
 num = 0
-for i in range(len(origin_n)-1, -1, -1):
-   num += a ** i
+for i in range(len(origin_n)):
+   num += int(origin_n[i]) * (a ** (len(origin_n) -1 - i))
 
 # 10진수 -> b진수
 ans_list = []
-while True:
-    ans_list.append(num % b)
-    num //= b
+if num == 0:
+    print(0)
+else:
+    while num > 0:
+        ans_list.append(num % b)
+        num //= b
 
-    if num == 1:
-        ans_list.append(num)
-        break
-
+ans_list = reversed(ans_list)
 for num in ans_list:
     print(num, end='')
