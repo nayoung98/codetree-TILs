@@ -19,7 +19,6 @@ elif A == 'Sat':
 elif A == 'Sun':
     ans = 7
 
-chk = 1
 cnt = 0 
 
 def chk_month(m1):
@@ -32,7 +31,7 @@ def chk_month(m1):
 
 while True:
     d1 += 1
-    chk += 1
+    cnt += 1
 
     if d1 == chk_month(m1):
         m1 += 1
@@ -41,4 +40,4 @@ while True:
     if m1 == m2 and d1 == d2:
         break
 
-print(chk//ans)
+print(cnt//ans)
