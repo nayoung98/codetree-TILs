@@ -4,22 +4,11 @@ input = sys.stdin.readline
 m1, d1, m2, d2 = map(int, input().split())
 A = input().rstrip()
 
-if A == 'Mon':
-    ans = 1
-elif A == 'Tue':
-    ans = 2
-elif A == 'Wed':
-    ans = 3
-elif A == 'Thu':
-    ans = 4
-elif A == 'Fri':
-    ans = 5
-elif A == 'Sat':
-    ans = 6
-elif A == 'Sun':
-    ans = 7
+days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+target_day_idx = days.index(A)
 
-cnt = 0 
+current_day_idx = 0 
+cnt = 0
 
 def chk_month(m1):
     if m1 == 2:
@@ -31,13 +20,16 @@ def chk_month(m1):
 
 while True:
     d1 += 1
-    cnt += 1
+    current_day_idx = (current_day_idx + 1) % 7 
 
-    if d1 == chk_month(m1):
+    if target_day_idx == current_day_idx:
+        cnt += 1
+        
+    if d1 > chk_month(m1):
         m1 += 1
         d1 = 1
 
     if m1 == m2 and d1 == d2:
         break
 
-print(cnt//ans)
+print(cnt)
