@@ -18,7 +18,8 @@ def chk_month(m1):
     else:
         return 30
 
-while True:
+while not (m1 == m2 and d1 == d2+1):
+
     d1 += 1
     current_day_idx = (current_day_idx + 1) % 7 
 
@@ -28,8 +29,5 @@ while True:
     if d1 > chk_month(m1):
         m1 += 1
         d1 = 1
-
-    if m1 == m2 and d1 == d2:
-        break
-
+        
 print(cnt)
