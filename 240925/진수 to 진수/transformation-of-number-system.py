@@ -3,7 +3,6 @@ import sys
 input = sys.stdin.readline
 a, b = map(int, input().split())
 origin_n = input().rstrip()
-n = int(origin_n)
 
 # a진수 -> 10진수
 num = 0
