@@ -16,21 +16,12 @@ for x, elem in info_list:
         arr[x] = 2
 
 max_score = 0
-for i in range(1, 10001): # 1-idx
+for i in range(1, 10001 - k):
     tmp_score = 0
 
-    if k == 1:
-        if arr[i] != 0:
-            tmp_score += arr[i]
-            max_score = max(max_score, tmp_score)
-            
-    else:
-        for j in range(1, 10001):
-            if arr[i] != 0 and arr[j] != 0:
-                if abs(i - j) == k:
-                    for l in range(i, j + 1):
-                        tmp_score += arr[l]
-            
-            max_score = max(max_score, tmp_score)
+    for j in range(i, i + k + 1):
+        tmp_score += arr[j]
+
+    max_score = max(max_score, tmp_score) 
 
 print(max_score)
