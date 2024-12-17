@@ -5,17 +5,19 @@ n = int(input())
 info_list = [list(map(int, input().split())) for _ in range(n)]
 
 chk = False
-max_x1, max_x2 = 0, 100000
 for i in range(n):
+    segments = [0] * 101
     for j in range(n):
         # 하나 제거
         if i != j:
             x1, x2 = info_list[j]
-            max_x1 = max(max_x1, x1)
-            max_x2 = max(max_x2, x2)
-    if max_x1 <= max_x2:
-        chk = True
-
+            for k in range(x1, x2 + 1):
+                segments[k] += 1
+    
+    for seg in segments:
+        if seg == (n - 1):
+            chk = True
+            
 if chk:
     print('Yes')
 else:
