@@ -21,6 +21,7 @@ if b < c or d < a:
     for area in cleaning:
         if area != 0:
             ans += 1
+    ans -= 2
 # 겹치는 경우
 else:
     for area in cleaning:
