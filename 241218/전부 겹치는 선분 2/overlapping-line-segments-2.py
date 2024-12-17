@@ -5,7 +5,7 @@ n = int(input())
 info_list = [list(map(int, input().split())) for _ in range(n)]
 
 chk = False
-max_x1, max_x2 = 0, 100
+max_x1, max_x2 = 0, 100000
 for i in range(n):
     for j in range(n):
         # 하나 제거
