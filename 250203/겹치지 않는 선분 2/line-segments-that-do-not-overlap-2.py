@@ -5,20 +5,30 @@
 n = int(input())
 points = [tuple(map(int, input().split())) for _ in range(n)]
 
-# 겹치는지 확인
-def is_overlapped(i, j):
-    global cnt
-    cnt = 0
+# # 겹치는지 확인
+# def is_overlapped(i, j):
+#     global cnt
+    
 
-    _, x = points[i]  
-    _, y = points[j]
-
-    if x > y:
-        cnt += 1
+    
 
 # 완전 탐색 -> 2개씩 겹치는지 조사
+cnt = 0
 for i in range(n):
     for j in range(i + 1, n):
-        is_overlapped(i, j)
-        
-print(n - 2 * cnt)
+
+        x1, x2 = points[i]  
+        x3, x4 = points[j]
+
+        if x1 > x3 and x2 < x4:
+            cnt += 1
+        elif x1 < x3 and x2 > x4:
+            cnt += 1
+
+ans = n - 2 * cnt
+if ans < 0:
+    print(0)
+else:
+    print(ans)
+
+# print(n - 2 * cnt)
