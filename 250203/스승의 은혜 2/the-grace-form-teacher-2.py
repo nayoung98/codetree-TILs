@@ -6,22 +6,26 @@
 # 입력
 n, b = map(int, input().split())
 prices = [int(input()) for _ in range(n)]
+prices = sorted(prices)
 ans = 0 
 
 # 완전탐색 -> 선물 하나씩 반값으로 
 for i in range(n):
     prices[i] /= 2
-    budget, cnt = 0, 0
+    budget, cnt = prices[i], 1
 
     # 예산에서 가능한 최대 학생 수
     for j in range(n):
+        if j == i:
+            continue
+
         budget += prices[j]
         cnt += 1
         
         if budget > b:
             budget -= prices[j]
             cnt -= 1
-    
+        
     prices[i] *= 2
     ans = max(ans, cnt)
             
