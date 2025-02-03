@@ -7,7 +7,7 @@ segments = [tuple(map(int, input().split())) for _ in range(n)]
 
 # 겹치는지 찾기
 def is_overlapped(i, j, k):
-    chks = [0] * 10 
+    chks = [0] * 101 
     for l in range(n):
         if l in [i, j, k]:
             continue
@@ -16,7 +16,7 @@ def is_overlapped(i, j, k):
         for m in range(a, b + 1):
             chks[m] += 1
     
-    flag = [False] * 10
+    flag = [False] * 101
     for idx, chk in enumerate(chks):
         if chk < 2:
             flag[idx] = True            
