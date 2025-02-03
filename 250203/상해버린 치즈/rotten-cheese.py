@@ -5,14 +5,14 @@
 # 상한 치즈를 먹은 사람에게 약을 복용시킬 때, 필요한 약의 최대 개수
 
 # 입력
-n, m, d, s = map(int, input().split())
-eat_info = [tuple(map(int, input().split())) for _ in range(d)]
-sick_info = [tuple(map(int, input().split())) for _ in range(s)]
+N, M, D, S = map(int, input().split())
+eat_info = [tuple(map(int, input().split())) for _ in range(D)]
+sick_info = [tuple(map(int, input().split())) for _ in range(S)]
 
 # sick_info로 상한 치즈 정보 추리기
-cheese = [0] * (m + 1) # 1-idx
+cheese = [0] * (M + 1) # 1-idx
 for (p, t) in sick_info:
-    for i in range(d):
+    for i in range(D):
         if eat_info[i][0] == p and eat_info[i][2] <= (t - 1):
             idx = eat_info[i][1]
             cheese[idx] += 1
@@ -23,11 +23,15 @@ for idx, item in enumerate(cheese):
         cheese_info.append(idx)
 
 # eat_info로 상한 치즈 먹은 사람 추리기
-ans = [0] * (m + 1)
+ans = []
 for item in cheese_info:
     for (p, m, t) in eat_info:
         if m == item:
-            ans[item] += 1
+            ans.append((m, p))
+ans = set(ans)
 
 # 상한 치즈 먹은 사람의 최댓값
-print(max(ans))
+cnt = [0] * (M + 1) # 1-idx
+for (m, p) in ans:
+    cnt[m] += 1
+print(max(cnt))
