@@ -11,20 +11,16 @@ ans = 0
 # 완전탐색 -> 선물 하나씩 반값으로 
 for i in range(n):
     prices[i] /= 2
+    budget, cnt = 0, 0
 
     # 예산에서 가능한 최대 학생 수
     for j in range(n):
-        budget, cnt = 0, 0
-        for k in range(n):
-            if k == j:
-                continue
-
-            budget += prices[k]
-            cnt += 1
-            
-            if cnt > b:
-                budget -= prices[k]
-                cnt -= 1
+        budget += prices[j]
+        cnt += 1
+        
+        if budget > b:
+            budget -= prices[j]
+            cnt -= 1
     
     prices[i] *= 2
     ans = max(ans, cnt)
