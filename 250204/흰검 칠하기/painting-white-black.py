@@ -9,10 +9,11 @@
 # 입력
 n = int(input())
 commands = [tuple(input().split()) for _ in range(n)]
-black_tiles, white_tiles, tmp_tiles = [0] * 10000, [0] * 10000, [0] * 10000 # 1-idx
+MAX_INT = 100 * 1000 * 2 + 1
+black_tiles, white_tiles, tmp_tiles = [0] * MAX_INT, [0] * MAX_INT, [0] * MAX_INT # 1-idx
 
 # 초기 위치
-tmp = 5000 
+tmp = 100 * 1000 
 
 # 움직이는 함수
 def simulate(x, d):
@@ -37,7 +38,7 @@ for (x, d) in commands:
 
 # 타일 개수 카운팅
 white, black, gray = 0, 0, 0
-for i in range(10000):
+for i in range(MAX_INT):
     if black_tiles[i] >= 2 and white_tiles[i] >= 2:
         gray += 1
     elif not (black_tiles[i] >= 2 and white_tiles[i] >= 2) and tmp_tiles[i] == 'B':
