@@ -9,8 +9,7 @@ a_info = [tuple(input().split()) for _ in range(n)] # (t, d), t: 움직이는 �
 b_info = [tuple(input().split()) for _ in range(m)]
 
 # 시간에 따른 로봇의 위치 기록
-MAX_INT = sys.maxsize
-
+MAX_INT = 500000 * 2 + 1
 a_location, b_location = [0] * MAX_INT, [0] * MAX_INT
 a_chk, b_chk = 0, 0
 
