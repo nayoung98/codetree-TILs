@@ -1,3 +1,4 @@
+import sys
 # 1초에 한칸씩 좌우로 움직이는 로봇 A, B
 # A가 움직이는 횟수 n, B가 움직이는 횟수 m
 # 로봇 A와 B가 바로 직전에 다른 위치에 있다가 그 다음 번에 같은 위치에 오게 되는 (마주치는) 경우의 수 구하기
@@ -8,7 +9,7 @@ a_info = [tuple(input().split()) for _ in range(n)] # (t, d), t: 움직이는 �
 b_info = [tuple(input().split()) for _ in range(m)]
 
 # 시간에 따른 로봇의 위치 기록
-MAX_INT = 1000000
+MAX_INT = sys.maxsize
 
 a_location, b_location = [0] * MAX_INT, [0] * MAX_INT
 a_chk, b_chk = 0, 0
