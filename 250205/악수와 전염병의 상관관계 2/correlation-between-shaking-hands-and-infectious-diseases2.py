@@ -20,6 +20,13 @@ cnt = [k] * n
 # 시간 순 악수
 for idx, (t, x, y) in enumerate(info):    
 
+    # 둘 다 감염자인 경우
+    if (x == p or result[x - 1] == 1) and (y == p or result[y - 1] == 1):
+        if (cnt[x - 1] > 0) and (cnt[y - 1] > 0):
+            cnt[x - 1] -= 1
+            cnt[y - 1] -= 1
+            continue
+            
     # 감염자가 x인 경우
     if x == p or result[x - 1] == 1:
         if cnt[x - 1] > 0:
@@ -33,5 +40,5 @@ for idx, (t, x, y) in enumerate(info):
             result[x - 1] = 1
             cnt[y - 1] -= 1
             continue
-                
+            
 print(*result, sep='')
