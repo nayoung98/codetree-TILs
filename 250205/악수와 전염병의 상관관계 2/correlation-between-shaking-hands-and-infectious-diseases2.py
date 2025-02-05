@@ -10,15 +10,26 @@ info = [tuple(map(int, input().split())) for _ in range(T)] # (t, x, y)
 # 시간 순 정렬
 info.sort(key=lambda x:x[0])
 
-# 결과
+# 감염 결과
 result = [0] * n # 0-idx
+result[p - 1] = 1 # 처음 걸린 사람
+
+# 감염 횟수
+cnt = [k] * n
 
 # 시간 순 악수
-for (t, x, y) in info:
-    if k > 0:
-        if x == p or y == p or result[x - 1] == 1 or result[y - 1] == 1:
-            k -= 1
-            result[x - 1] = 1
+for (t, x, y) in info:    
+
+    # 감염자가 x인 경우
+    if x == p or result[x - 1] == 1:
+        if cnt[x - 1] > 0:
             result[y - 1] = 1
-            
+            cnt[x - 1] -= 1
+
+    # 감염자가 y인 경우
+    if y == p or result[y - 1] == 1:
+        if cnt[y - 1] > 0:
+            result[x - 1] = 1
+            cnt[y - 1] -= 1
+    
 print(*result, sep='')
