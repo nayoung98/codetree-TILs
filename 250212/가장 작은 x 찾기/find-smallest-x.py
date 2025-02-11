@@ -6,15 +6,13 @@ import sys
 # 입력
 n = int(input())
 info = [tuple(map(int, input().split())) for _ in range(n)]
-x = 1
 min_x = sys.maxsize
 
-while True:
-    chk = False
-    tmp_x = x
+for i in range(1, 5001):
+    x = i
     for a, b in info:
-        tmp_x *= 2
-        if not (a <= tmp_x and tmp_x <= b):
+        i *= 2
+        if not (a <= i and i <= b):
             chk = False
             break
         else:
@@ -23,10 +21,4 @@ while True:
     if chk:
         min_x = min(min_x, x)
 
-    x += 1
-    n -= 1
-
-    if n == 0:
-        break
-
-print(min_x)
+print(min_x)    
