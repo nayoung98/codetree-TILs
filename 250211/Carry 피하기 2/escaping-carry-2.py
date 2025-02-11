@@ -9,7 +9,7 @@ cnt = 0
 # carry인지 확인하기
 def isnot_carry(a_info, b_info, c_info):
     # 각 자리수를 더하면서 carry인지 검사
-    chk = False
+    chk, result = False, []
     for i in range(5):
         result.append(a_info[i] + b_info[i] + c_info[i])
 
@@ -23,10 +23,11 @@ def isnot_carry(a_info, b_info, c_info):
     return False # 캐리 발생
     
 # 서로 다른 3개의 수 고르기
+result = []
 for i in range(n):
     for j in range(i + 1, n):
         for k in range(j + 1, n):
-            a_info, b_info, c_info, result = [], [], [], []
+            a_info, b_info, c_info= [], [], []
             a, b, c = nums[i], nums[j], nums[k]
             
             # 만, 천, 백, 십, 일
@@ -36,9 +37,9 @@ for i in range(n):
 
             # 캐리 검사
             if isnot_carry(a_info, b_info, c_info):
-                cnt += 1
+                result.append(a + b + c)
 
-if cnt == 0:
-    print(-1)
+if result:
+    print(max(result))
 else:
-    print(result[0] * 10000 + result[1] * 1000 + result[2] * 100 + result[3] * 10 + result[4])
+    print(-1)
