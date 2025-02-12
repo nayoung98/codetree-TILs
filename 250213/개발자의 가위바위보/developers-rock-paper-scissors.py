@@ -8,7 +8,7 @@ n = int(input())
 info = [tuple(map(int, input().split())) for _ in range(n)]
 
 # 첫번째 개발자가 이기는 쌍 (가위 = S, 보 = P, 바위 = R)
-win_first = [('S', 'P'), ('P', 'R')]
+win_first = [('S', 'P'), ('P', 'R'), ('R', 'S')]
 
 # 가위바위보와 숫자 매칭시키기
 # Case 1. 가위, 바위, 보
