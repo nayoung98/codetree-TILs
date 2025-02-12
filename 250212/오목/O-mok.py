@@ -4,7 +4,6 @@
 # 입력 (1: 검, 2: 흰, 0: 공백)
 grid = [list(map(int, input().split())) for _ in range(19)]
 dxs, dys = [-1, -1, -1, 0, 1, 1, 1, 0], [-1, 0, 1, 1, 1, 0, -1, -1]
-# dxs, dys = [1, 0, -1, 0], [0, 1, 0, -1]
 
 # 범위 확인
 def in_range(x, y):
@@ -30,7 +29,7 @@ def simulate(x, y):
                 if in_range(nx + dx, ny + dy) and grid[nx + dx][ny + dy] == target:
                     break
                 print(target)
-                print(x + 1, y + 3)
+                print(x + 1 + dx * 2, y + 1 + dy * 2)
                 exit(0)
             
             nx += dx
