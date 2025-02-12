@@ -5,9 +5,5 @@
 arr = list(map(int, input().split()))
 arr.sort()
 
-if arr[0] + 1 == arr[1] and arr[1] + 1 == arr[2]:
-    print(0)
-elif arr[1] - arr[0] == 1 or arr[2] - arr[1] == 1:
-    print(3)
-else:
-    print(2)
+max_diff = max(arr[1] - arr[0], arr[2] - arr[1])
+print(max_diff - 1)
