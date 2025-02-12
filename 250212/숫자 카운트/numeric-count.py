@@ -1,4 +1,4 @@
-# A : 1~9까지 ㅓ로 다른 숫자 세 개로 구성된 세자리 수
+# A : 1~9까지 서로 다른 숫자 세 개로 구성된 세자리 수
 # B : 세 자리 수를 A에게 묻기 -> 동일한 위치: 1번 카운트 += 1, 다른 위치: 2번 카운트 += 1
 
 # 입력
@@ -9,7 +9,7 @@ result = []
 for i in range(1, 10):
     for j in range(1, 10):
         for k in range(1, 10):
-            if k == i or k == j:
+            if k == i or k == j or i == j:
                 continue
 
             # 세 자리 수 구성
