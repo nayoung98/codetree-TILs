@@ -5,5 +5,6 @@
 arr = list(map(int, input().split()))
 arr.sort()
 
+# 두 사람 간의 차이 중 '최댓값 - 1' 만큼 움직이게 될 떄 최대임
 max_diff = max(arr[1] - arr[0], arr[2] - arr[1])
 print(max_diff - 1)
