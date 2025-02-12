@@ -9,12 +9,12 @@ dxs, dys = [-1, -1, -1, 0, 1, 1, 1, 0], [-1, 0, 1, 1, 1, 0, -1, -1]
 def in_range(x, y):
     return 0 <= x < 19 and 0 <= y < 19
 
+# 오목
 def simulate(x, y):
     target = grid[x][y]
-    
+
     for dx, dy in zip(dxs, dys):
         cnt = 1
-        flag = False
         nx, ny = x + dx, y + dy
         
         while True:
@@ -30,7 +30,7 @@ def simulate(x, y):
                     break
                 print(target)
                 print(x + 1 + dx * 2, y + 1 + dy * 2)
-                exit(0)
+                exit(0)                
             
             nx += dx
             ny += dy
@@ -39,3 +39,5 @@ for i in range(19):
     for j in range(19):
         if grid[i][j] != 0:
             simulate(i, j)
+print(0) # 승부가 결정되지 않은 경우
+
