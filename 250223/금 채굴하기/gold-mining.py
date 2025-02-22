@@ -8,35 +8,17 @@
 # 입력
 n, m = map(int, input().split())
 grid = [list(map(int, input().split())) for _ in range(n)]
-# grid = [[1] * 10 for _ in range(10)]
-# dxs, dys = [-1, 0, 1, 0, -1, -1, 1, 1], [0, 1, 0, -1, -1, 1, 1, -1]
+dxs, dys = [0, 0, -1, 1], [-1, 1, 0, 0]
 
 # 범위 확인
 def in_range(i, j):
     return 0 <= i < n and 0 <= j < n
 
-# # 마름모 모양 채굴: (i, j) = 중심 좌표, k = 마름모의 크기
-# def find_gold(x, y, k):
-#     # 초기 위치에서의 금
-#     gold = grid[x][y]
-#     for idx in range(len(dxs)):
-#         if idx < 4: # 상하좌우 방향은 +k
-#             for i in range(1, k + 1):
-#                 nx, ny = x + i * dxs[idx], y + i * dys[idx]
-#                 if in_range(nx, ny):
-#                     gold += grid[nx][ny]
-#         else: # 그 외 방향은 + (k - 1)
-#             for i in range(1, k):
-#                 nx, ny = x + i * dxs[idx], y + i * dys[idx]
-#                 if in_range(nx, ny):
-#                     gold += grid[nx][ny]
-#     return gold
-
-dxs, dys = [0, 0, -1, 1], [-1, 1, 0, 0]
 def find_gold(x, y, k):
     gold = grid[x][y]
     tmp_x = x
     tmp_k = k
+
     # 가운데줄
     for dx, dy in zip(dxs, dys):
         for i in range(1, k + 1):
@@ -87,7 +69,6 @@ def find_cost(k):
 
 # 격자 안에서 시뮬레이션 
 # k를 바꿔가며 완전탐색
-# result = []
 max_gold = 0 
 for k in range(n + 1):
     for i in range(n):
@@ -98,4 +79,3 @@ for k in range(n + 1):
                 max_gold = max(max_gold, gold)
 
 print(max_gold)
-# print(result)
