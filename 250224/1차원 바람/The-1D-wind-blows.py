@@ -13,10 +13,12 @@ grid = [list(map(int, input().split())) for _ in range(n)]
 
 # 바람의 정보 (행 번호 0-idx, 방향 'L' or 'R')
 wind_info = [tuple(input().split()) for _ in range(q)]
+flag = [False] * n
 
 # 바람 불기 
 def make_wind(r, m, d):
     # r: 행(0-idx), m, d: 바람 방향
+    flag[r] = True
     if d == 'L': # 왼쪽에서 불어오는 바람
         tmp = grid[r][m - 1] # 맨 오른쪽 원소
         for i in range(m - 1, 0, -1):
@@ -38,13 +40,15 @@ def wind_up(r, m, d):
             if grid[i][j] == grid[i - 1][j]:
                 cnt += 1
         
-        if cnt >= 1:
+        if flag[i] and cnt >= 1:
             if tmp_up == 'R':
                 make_wind(i - 1, m, 'L')
                 tmp_up = 'L'
             else:
                 make_wind(i - 1, m, 'R')
                 tmp_up = 'R'
+        else:
+            break
 
 # 아래 행 전파
 def wind_down(r, m, d):
@@ -55,13 +59,17 @@ def wind_down(r, m, d):
             if grid[i][j] == grid[i + 1][j]:
                 cnt += 1
         
-        if cnt >= 1:
+        if flag[i] and cnt >= 1:
             if tmp_down == 'R':
                 make_wind(i + 1, m, 'L')
+                # flag[i + 1] = True
                 tmp_down = 'L'
             else:
                 make_wind(i + 1, m, 'R')
+                # flag[i + 1] = True
                 tmp_down = 'R'
+        else:
+            break
 
 for (r, d) in wind_info:
     r = int(r) - 1
