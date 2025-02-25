@@ -7,7 +7,7 @@ n, m = map(int, input().split())
 bombs = list(int(input()) for _ in range(n))
 memory = [1 for _ in range(101)]
 
-def remove_bomb():  
+def remove_bomb(): 
     location = []
 
     # m개 이상의 폭탄이 있는지 검사
@@ -43,12 +43,16 @@ def remove_bomb():
 
 
 # 실행      
-for _ in range(100):
-    remove_bomb()
-
 result = []
+for _ in range(100):
+    if m == 1:
+        flag = False
+    else:
+        remove_bomb()
+        flag = True
+        
 for i in range(n):
-    if bombs[i] != 0:
+    if bombs[i] != 0 and flag:
         result.append(bombs[i])
 
 # 출력
