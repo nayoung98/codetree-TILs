@@ -27,42 +27,8 @@ def simulate():
 
     # 한번 이동
     nx, ny = x + dxs[d], y + dys[d]
-    if in_range(nx, ny) and grid[nx][ny] == '#':
-        d = (d - 1) % 4
-    elif grid[nx][ny] != '#':
-        if not in_range(nx, ny):
-            t += 1 # 탈출
-            flag = True
-        else:
-            t += 1
-            x, y = nx, ny
-            if d == 0:
-                if not (in_range(nx + 1, ny) and grid[nx + 1][ny] == '#'):
-                    d = (d + 1) % 4
-                    x, y = x + dxs[d], y + dys[d]
-                    t += 1
-            elif d == 1:
-                if not (in_range(nx, ny - 1) and grid[nx][ny - 1] == '#'):
-                    d = (d + 1) % 4
-                    x, y = x + dxs[d], y + dys[d]
-                    t += 1
-            elif d == 2:
-                if not (in_range(nx - 1, ny) and grid[nx - 1][ny] == '#'):
-                    d = (d + 1) % 4
-                    x, y = x + dxs[d], y + dys[d]
-                    t += 1
-            elif d == 3:
-                if not (in_range(nx, ny + 1) and grid[nx][ny + 1] == '#'):
-                    d = (d + 1) % 4
-                    x, y = x + dxs[d], y + dys[d]
-                    t += 1
+    print(nx, ny)
 
-    
-for _ in range(n * n):
-    # flag = False
-    simulate()
-    # # 한번 이동
-    # nx, ny = x + dxs[d], y + dys[d]
     # if in_range(nx, ny) and grid[nx][ny] == '#':
     #     d = (d - 1) % 4
     # elif grid[nx][ny] != '#':
@@ -92,6 +58,47 @@ for _ in range(n * n):
     #                 d = (d + 1) % 4
     #                 x, y = x + dxs[d], y + dys[d]
     #                 t += 1
+    # print(x, y)
+
+    
+for _ in range(n * n):
+    flag = False
+    # simulate()
+    # 한번 이동
+    nx, ny = x + dxs[d], y + dys[d]
+    # print(nx, ny)
+    if in_range(nx, ny) and grid[nx][ny] == '#':
+        d = (d - 1) % 4
+    elif not in_range(nx, ny):
+        t += 1 # 탈출
+        flag = True
+    elif in_range(nx, ny) and grid[nx][ny] != '#':
+        # if not in_range(nx, ny):
+        #     t += 1 # 탈출
+        #     flag = True
+        # else:
+        t += 1
+        x, y = nx, ny
+        if d == 0:
+            if not (in_range(nx + 1, ny) and grid[nx + 1][ny] == '#'):
+                d = (d + 1) % 4
+                x, y = x + dxs[d], y + dys[d]
+                t += 1
+        elif d == 1:
+            if not (in_range(nx, ny - 1) and grid[nx][ny - 1] == '#'):
+                d = (d + 1) % 4
+                x, y = x + dxs[d], y + dys[d]
+                t += 1
+        elif d == 2:
+            if not (in_range(nx - 1, ny) and grid[nx - 1][ny] == '#'):
+                d = (d + 1) % 4
+                x, y = x + dxs[d], y + dys[d]
+                t += 1
+        elif d == 3:
+            if not (in_range(nx, ny + 1) and grid[nx][ny + 1] == '#'):
+                d = (d + 1) % 4
+                x, y = x + dxs[d], y + dys[d]
+                t += 1
 
     if flag:
         break
