@@ -70,22 +70,27 @@ def inspection_grid(n):
             return True
     return False
 
-# k번 반복 
-for _ in range(k):
-    explode_bomb(n)
-    rotate_grid(n)
-
-# 반복 이후 조건에 맞는 폭탄 있는지 확인
-while True:
-    if not inspection_grid(n):
-        break
-    else:
+if n == 1 and m == 1:
+    result = 0
+else:
+    # k번 반복 
+    for _ in range(k):
         explode_bomb(n)
+        rotate_grid(n)
 
-# 출력
-result = 0
-for i in range(n):
-    for j in range(n):
-        if grid[i][j] != 0:
-            result += 1
+    # 반복 이후 조건에 맞는 폭탄 있는지 확인
+    while True:
+        if not inspection_grid(n):
+            break
+        else:
+            explode_bomb(n)
+
+    # 출력
+    result = 0
+    for i in range(n):
+        for j in range(n):
+            if grid[i][j] != 0:
+                result += 1
+
 print(result)
+
