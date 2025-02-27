@@ -1,22 +1,3 @@
-# # 2차원 격자 
-# # 인접한 4개의 칸 중 가장 큰 숫자로 이동 -> t번 반복
-# ## 가장 큰 숫자가 여러 개인 경우 우선 순위: 상하좌우
-# # 출력: 최종 위치
-
-# def simulate():
-#     max_num = 0
-#     max_x, max_y = -1, -1
-#     global curr_x, curr_y
-#     dxs, dys = [-1, 1, 0, 0], [0, 0, -1, 1]
-
-#     for dx, dy in zip(dxs, dys):
-#         nx, ny = curr_x + dx, curr_y + dy
-#         if in_range(nx, ny) and grid[nx][ny] > max_num:
-#             max_num = grid[nx][ny]
-#             max_x, max_y = nx, ny
-    
-#     curr_x, curr_y = nx, ny
-
 # n * n 격자
 # 특정 위치에서 시작하여 이동
 # 상하좌우로 인접한 곳에 있는 숫자들 중 현재 위치에 있는 숫자보다 더 큰 위치로 이동
