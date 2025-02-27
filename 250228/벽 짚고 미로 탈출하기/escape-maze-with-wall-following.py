@@ -14,8 +14,7 @@ y -= 1
 grid = [list(input().strip()) for _ in range(n)]
 
 dxs, dys = [0, 1, 0, -1], [1, 0, -1, 0]
-d = 0 # 현재 방향
-t = 0 # 소요 시간
+d, t = 0, 0 # 현재 방향, 소요 시간
 
 def in_range(x, y):
     return 0 <= x < n and 0 <= y < n
@@ -27,56 +26,13 @@ def simulate():
 
     # 한번 이동
     nx, ny = x + dxs[d], y + dys[d]
-    print(nx, ny)
 
-    # if in_range(nx, ny) and grid[nx][ny] == '#':
-    #     d = (d - 1) % 4
-    # elif grid[nx][ny] != '#':
-    #     if not in_range(nx, ny):
-    #         t += 1 # 탈출
-    #         flag = True
-    #     else:
-    #         t += 1
-    #         x, y = nx, ny
-    #         if d == 0:
-    #             if not (in_range(nx + 1, ny) and grid[nx + 1][ny] == '#'):
-    #                 d = (d + 1) % 4
-    #                 x, y = x + dxs[d], y + dys[d]
-    #                 t += 1
-    #         elif d == 1:
-    #             if not (in_range(nx, ny - 1) and grid[nx][ny - 1] == '#'):
-    #                 d = (d + 1) % 4
-    #                 x, y = x + dxs[d], y + dys[d]
-    #                 t += 1
-    #         elif d == 2:
-    #             if not (in_range(nx - 1, ny) and grid[nx - 1][ny] == '#'):
-    #                 d = (d + 1) % 4
-    #                 x, y = x + dxs[d], y + dys[d]
-    #                 t += 1
-    #         elif d == 3:
-    #             if not (in_range(nx, ny + 1) and grid[nx][ny + 1] == '#'):
-    #                 d = (d + 1) % 4
-    #                 x, y = x + dxs[d], y + dys[d]
-    #                 t += 1
-    # print(x, y)
-
-    
-for _ in range(n * n):
-    flag = False
-    # simulate()
-    # 한번 이동
-    nx, ny = x + dxs[d], y + dys[d]
-    # print(nx, ny)
     if in_range(nx, ny) and grid[nx][ny] == '#':
         d = (d - 1) % 4
     elif not in_range(nx, ny):
         t += 1 # 탈출
         flag = True
     elif in_range(nx, ny) and grid[nx][ny] != '#':
-        # if not in_range(nx, ny):
-        #     t += 1 # 탈출
-        #     flag = True
-        # else:
         t += 1
         x, y = nx, ny
         if d == 0:
@@ -99,6 +55,9 @@ for _ in range(n * n):
                 d = (d + 1) % 4
                 x, y = x + dxs[d], y + dys[d]
                 t += 1
+
+for _ in range(n * n):
+    simulate()
 
     if flag:
         break
