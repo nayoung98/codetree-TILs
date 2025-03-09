@@ -38,7 +38,7 @@ def bfs():
             if can_go(nx, ny):
                 push(nx, ny)
 
-    # queue가 비워졌을 때, 마지막 칸에 있다면 탈출 가능
+    # queue가 비워졌을 때, 마지막 칸에 있다면 탈출 가능 (우측 하단의 방문 여부만 체크)
     if visited[n - 1][m - 1] == True:
         print(1)
     else: 
