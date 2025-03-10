@@ -4,12 +4,6 @@
 # 구슬이 충돌 (이동 후 같은 위치에 있는 경우)하면 부딪힌 구슬 모두 사라짐
 # 출력: 아주 오랜시간이 흐른 뒤 남아있는 구슬의 개수
 
-# # 입력
-# t = int(input())
-# n, m = map(int, input().split())
-# marbles = [list(input().split()) for _ in range(m)] # x, y, d
-# grid = [[0] * n for _ in range(n)]
-
 # 구슬의 방향 인덱스 리턴
 def get_idx(d):
     if d == 'U':
@@ -33,7 +27,6 @@ def start():
         marbles[i][0], marbles[i][1] = x, y
         grid[x][y] += 1
 
-
 # 격자 내 검사
 def in_range(x, y):
     return 0 <= x < n and 0 <= y < n
@@ -50,8 +43,6 @@ def move_marbles():
         # 없어진 구슬은 이동 안함
         if d == -1: 
             continue
-
-        # x, y = int(x) - 1, int(y) - 1
         nx, ny = x + dxs[d], y + dys[d]
 
         if in_range(nx, ny):
@@ -64,7 +55,6 @@ def move_marbles():
         # 1번 움직인 뒤 구슬의 정보 (위치, 방향) 저장
         marbles[i][0], marbles[i][1], marbles[i][2] \
             = x, y, d
-            # = x + 1, y + 1, d
 
 # 충돌 제거
 def remove_marbles():
@@ -72,7 +62,6 @@ def remove_marbles():
     for i in range(n):
         idx = []
         for j in range(n):
-            # print(tmp_grid[i][j])
             # 충돌한 구슬 제거
             if len(tmp_grid[i][j]) >= 2:
                 idx = tmp_grid[i][j]
@@ -81,7 +70,6 @@ def remove_marbles():
 
     # 구슬 저장
     new_grid = [[0] * n for _ in range(n)]
-    # grid = [[0] * n for _ in range(n)]
     for x, y, d in marbles:
         if d == -1:
             continue
@@ -91,16 +79,6 @@ def remove_marbles():
         for j in range(n):
             grid[i][j] = new_grid[i][j]
         
-    # for i in range(n):
-    #     for j in range(n):
-    #         # if len(tmp_grid[i][j]) >= 2 or len(tmp_grid[i][j]) == 0:
-    #         if len(tmp_grid[i][j]) >= 2:
-    #             grid[i][j] = 0
-    #         elif len(tmp_grid[i][j]) == 1:
-    #             grid[i][j] = 1
-    #         else:
-    #             grid[i][j] = 0
-
 # 입력
 t = int(input())
 
@@ -111,13 +89,10 @@ for _ in range(t):
 
     # 실행
     start()
-    # print(marbles)
-    for _ in range(n * n):
+    for _ in range(2 * n):
         move_marbles()
         remove_marbles()
-        # print(tmp_grid)
-        # print(marbles)
-        # print(grid) 
+
     
     # 결과 출력
     result = 0
@@ -126,17 +101,3 @@ for _ in range(t):
             if grid[i][j] == 1:
                 result += 1
     print(result)
-
-# # 실행
-# start()
-# for _ in range(n * n):
-#     move_marbles()
-#     remove_marbles()
-    
-# # 결과 출력
-# result = 0
-# for i in range(n):
-#     for j in range(n):
-#         if grid[i][j] == 1:
-#             result += 1
-# print(result)
