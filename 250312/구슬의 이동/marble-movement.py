@@ -76,7 +76,7 @@ def remove_marbles():
                 for idx,(r, c, d, v) in enumerate(marbles_info):
                     if r == i and c == j:
                         chk_marbles.append((idx, r, c, d, v))
-
+                
                 # 남아있는 구슬의 개수 확인 후, 우선순위에 따라 정리
                 if len(chk_marbles) > k:
                     chk_marbles.sort(key=lambda x:x[4], reverse=True)
@@ -84,12 +84,14 @@ def remove_marbles():
                         mi = chk_marbles[marble][0]
                         tmp_marbles[mi][0], tmp_marbles[mi][1], tmp_marbles[mi][2], tmp_marbles[mi][3] \
                             = chk_marbles[marble][1], chk_marbles[marble][2], chk_marbles[marble][3], chk_marbles[marble][4]  
-
+                # print(chk_marbles)
+                # print(tmp_marbles)
                 # 구슬의 정보 업데이트
                 for idx,(r, c, d, v) in enumerate(marbles_info):
-                    marbles_info[idx][0], marbles_info[idx][1], marbles_info[idx][2], marbles_info[idx][3] \
-                        = tmp_marbles[idx][0], tmp_marbles[idx][1], tmp_marbles[idx][2], tmp_marbles[idx][3]
-
+                    if r == i and c == j:
+                        marbles_info[idx][0], marbles_info[idx][1], marbles_info[idx][2], marbles_info[idx][3] \
+                            = tmp_marbles[idx][0], tmp_marbles[idx][1], tmp_marbles[idx][2], tmp_marbles[idx][3]
+                # print(marbles_info)
     # 원래 grid에 저장
     for i in range(n):
         for j in range(n):
