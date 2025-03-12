@@ -21,8 +21,7 @@ def start():
         idx = mapper[d]
 
         # 구슬 정보 업데이트
-        marbles_info[i][0], marbles_info[i][1], marbles_info[i][2], marbles_info[i][3] \
-            = r, c, idx, v # r, c, d
+        marbles_info[i][:] = r, c, idx, v 
 
         # 구슬의 초기 배치
         grid[r][c] += 1
@@ -57,13 +56,13 @@ def move_marbles():
 
         # 최종 위치에 구슬 기록, 저장
         tmp_grid[x][y] += 1
-        marbles_info[i][0], marbles_info[i][1], marbles_info[i][2] = x, y, d
+        marbles_info[i][:-1] = x, y, d
 
 # 충돌 검사
 def remove_marbles():
     global grid, tmp_grid, marbles_info
     chk_marbles = []
-    tmp_marbles = [[-1] * n for _ in range(m)]
+    tmp_marbles = [[-1] * 4 for _ in range(m)]
 
     # tmp_grid 돌면서 구슬의 개수 확인
     for i in range(n):
@@ -74,25 +73,25 @@ def remove_marbles():
 
                 # 같은 위치인 구슬만 남기기
                 for idx,(r, c, d, v) in enumerate(marbles_info):
-                    if r == i and c == j:
+                    if in_range(r, c) and r == i and c == j:
                         chk_marbles.append((idx, r, c, d, v))
                 
                 # 남아있는 구슬의 개수 확인 후, 우선순위에 따라 정리
                 if len(chk_marbles) > k:
-                    chk_marbles.sort(key=lambda x:x[4], reverse=True)
-                    chk_marbles.sort(key=lambda x:x[0], reverse=True)
-                    
+                    chk_marbles.sort(key=lambda x: (-x[4], -x[0]))
+
                     for marble in range(k):
                         mi = chk_marbles[marble][0]
-                        tmp_marbles[mi][0], tmp_marbles[mi][1], tmp_marbles[mi][2], tmp_marbles[mi][3] \
-                            = chk_marbles[marble][1], chk_marbles[marble][2], chk_marbles[marble][3], chk_marbles[marble][4]  
-               
-                # 구슬의 정보 업데이트
-                for idx,(r, c, d, v) in enumerate(marbles_info):
-                    if r == i and c == j:
-                        marbles_info[idx][0], marbles_info[idx][1], marbles_info[idx][2], marbles_info[idx][3] \
-                            = tmp_marbles[idx][0], tmp_marbles[idx][1], tmp_marbles[idx][2], tmp_marbles[idx][3]
+                        tmp_marbles[mi] = list(chk_marbles[marble][1:])
 
+                # 구슬의 정보 업데이트
+                for idx, r, c, d, v in chk_marbles:
+                    if in_range(r, c):
+                        marbles_info[idx] = tmp_marbles[idx]
+                
+                chk_marbles = []
+                tmp_marbles = [[-1] * 4 for _ in range(m)]
+            
     # 원래 grid에 저장
     for i in range(n):
         for j in range(n):
