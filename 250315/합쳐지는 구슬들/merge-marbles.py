@@ -72,7 +72,7 @@ def chk_marbles():
                     if idx == sum_i:
                         marbles_info[idx][2:] = sum_d, sum_w
                     else: # 소멸
-                        marbles_info[idx][2] = -1
+                        marbles_info[idx][:] = -1, -1, -1, -1
             # 초기화
             chk = []
 
