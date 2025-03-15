@@ -9,11 +9,14 @@
 # 출력: k번 반복한 후의 위치
 
 from collections import deque
+
 # 입력
 n, k = map(int, input().split())
 grid = [list(map(int, input().split())) for _ in range(n)] 
-visited = [[False] * n for _ in range(n)]
 q = deque()
+visited = [[False] * n for _ in range(n)]
+move_list = []
+
 # 초기 시작 위치
 r, c = map(int, input().split()) 
 r -= 1
@@ -25,35 +28,39 @@ q.append((r, c))
 def in_range(x, y):
     return 0 <= x < n and 0 <= y < n
 
-def can_go(x, y):
+def can_go(x, y, num):
     return in_range(x, y) and \
             not visited[x][y] and \
-            num >= grid[x][y]
+            num > grid[x][y]
 
 def bfs():
     dxs, dys = [-1, 0, 1, 0], [0, 1, 0, -1]
-    global move_list
-    move_list = []
+    global move_list, num
 
     while q:
         x, y = q.popleft()
         for dx, dy in zip(dxs, dys):
             nx, ny = x + dx, y + dy
-            if can_go(nx, ny):
+            if can_go(nx, ny, num):
                 move_list.append((nx, ny, grid[nx][ny]))
                 visited[nx][ny] = True
                 q.append((nx, ny))
-            # else:
-            #     break
-
+# 실행
 for _ in range(k):
     bfs()
-    move_list.sort(key=lambda x:(-x[2], x[0], x[1]))
-    r, c, num = move_list[0][:]
-
-    # print(move_list)
     if len(move_list) != 0:
+        # 조건에 따라 정렬 (큰 숫자, 작은 행, 작은 열)
         move_list.sort(key=lambda x:(-x[2], x[0], x[1]))
+        r, c, num = move_list[0][:]
 
-    # r, c, num = move_list[0][:]
-    # print(r, c, num)
+        # 초기화 
+        move_list = []
+        visited = [[False] * n for _ in range(n)]
+        visited[r][c] = True
+        q.append((r, c))
+    # 이동 불가능하면 멈춤
+    else:
+        break
+
+# 출력 (1-idx)
+print(r + 1, c + 1)
