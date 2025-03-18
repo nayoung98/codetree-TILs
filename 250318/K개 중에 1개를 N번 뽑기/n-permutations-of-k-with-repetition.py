@@ -3,7 +3,6 @@
 
 # 입력
 k, n = map(int, input().split())
-nums = [i for i in range(1, k + 1)]
 selected_nums = []
 
 def print_nums(selected_nums):
