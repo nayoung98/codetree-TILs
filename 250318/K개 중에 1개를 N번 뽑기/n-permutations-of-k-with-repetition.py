@@ -5,6 +5,7 @@
 k, n = map(int, input().split())
 selected_nums = []
 
+# 고른 숫자 출력
 def print_nums(selected_nums):
     for num in selected_nums:
         print(num, end=' ')
@@ -21,4 +22,5 @@ def choose(curr_num):
         choose(curr_num + 1)
         selected_nums.pop()
 
+# 실행
 choose(0)
