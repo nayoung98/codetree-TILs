@@ -66,6 +66,9 @@ def choose_city(curr_num, cnt):
     global max_cnt
 
     # 종료 조건
+    if curr_num > len(nums) or cnt > k:
+        return
+
     if curr_num == len(nums):
         if cnt == k:
             max_cnt = max(max_cnt, get_cnt(selected_city))
