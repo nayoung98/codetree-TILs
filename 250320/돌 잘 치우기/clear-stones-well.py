@@ -32,7 +32,7 @@ def bfs():
                 q.append((nx, ny))
 
 def initialize_grid():
-    global visited, tmp_grid
+    global tmp_grid, visited
 
     tmp_grid = [[0] * n for _ in range(n)]
     visited = [[False] * n for _ in range(n)]
@@ -43,6 +43,8 @@ def initialize_grid():
 
 def move_stones(selected_stones):
     global visited, tmp_grid
+    
+    # 초기화
     initialize_grid()
 
     # 선택한 돌 바꾸기
@@ -64,9 +66,6 @@ def move_stones(selected_stones):
             if visited[i][j]:
                 tmp_cnt += 1
 
-    # 초기화
-    initialize_grid()
-
     return tmp_cnt
    
 max_cnt = 0
@@ -76,7 +75,7 @@ def simulate(curr_num, cnt):
 
     # k개 돌 중 m개 선택하기
     # 종료 조건
-    if curr_num == k: # 총 돌의 개수
+    if curr_num == len(stones): # 총 돌의 개수
         if cnt == m: # 선택된 돌의 개수
             # 선택된 돌 바꾸고 칸 수 확인
             max_cnt = max(max_cnt, move_stones(selected_stones))
