@@ -63,26 +63,13 @@ def is_end():
                 return False
     return True
 
-# # 설계
-# q.append((0, 0))
-# visited[0][0] = True
-
 # 실행 
-# for _ in range(2):
 while True:
 
     bfs()
     ice_list = sorted(list(set(ice_list)))
     remove_ice()
 
-    # print(ice_list)
-    # print(grid)
-    # print(is_end())
     if is_end():
         print(t, len(ice_list))
-
-        # 마지막 개수 
-        # print(ice_list)
-        # print()
-        
         break 
