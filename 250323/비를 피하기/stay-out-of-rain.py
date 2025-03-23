@@ -32,16 +32,26 @@ def can_go(x, y):
 def bfs():
     global time, visited
     dxs, dys = [-1, 1, 0, 0], [0, 0, -1, 1]
+    min_result = []
 
     while q:
         x, y = q.popleft()
         for dx, dy in zip(dxs, dys):
             nx, ny = x + dx, y + dy
             if can_go(nx, ny):
-                q.append((nx, ny))
-                visited[nx][ny] = True
-                time[nx][ny] = time[x][y] + 1
 
+                time[nx][ny] = time[x][y] + 1
+                visited[nx][ny] = True
+                q.append((nx, ny))
+
+                if grid[nx][ny] == 3:
+                    min_result.append((time[nx][ny]))
+
+    if len(min_result) == 0:
+        return -1
+    
+    return min(min_result)
+                
 # 실행
 result = [[0] * n for _ in range(n)]
 
@@ -50,23 +60,12 @@ for i in range(n):
 
         # 사람 있는 곳 추가
         if grid[i][j] == 2:
-            q.append((i, j))
-            visited[i][j] = True
-        
-            # bfs 돌면서 거리 체크
-            min_time = n * n
-            flag = False
-            bfs()
             
-            # 방문 여부 확인
-            for r, c in dest:
-                if visited[r][c]: # 최소 시간 저장
-                    min_time = min(time[r][c], min_time)
-                    result[i][j] = min_time
-                    flag = True # 방문 o
-
-            if not flag: # 방문 x
-                result[i][j] = -1
+            visited[i][j] = True
+            q.append((i, j))
+            
+            # bfs 돌면서 거리 체크
+            result[i][j] = bfs()
         
             # 초기화
             visited = [[False] * n for _ in range(n)]
