@@ -56,14 +56,16 @@ for i in range(n):
             # bfs 돌면서 거리 체크
             min_time = n * n
             bfs()
-
+            
             # 방문 여부 확인
             for r, c in dest:
                 if visited[r][c]: # 최소 시간 저장
                     min_time = min(time[r][c], min_time)
                     result[i][j] = min_time
-                else: # 방문 x
-                    result[i][j] = -1
+                    flag = True # 방문 o
+
+            if not flag: # 방문 x
+                result[i][j] = -1
         
             # 초기화
             visited = [[False] * n for _ in range(n)]
