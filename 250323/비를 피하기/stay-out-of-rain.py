@@ -55,6 +55,7 @@ for i in range(n):
         
             # bfs 돌면서 거리 체크
             min_time = n * n
+            flag = False
             bfs()
             
             # 방문 여부 확인
