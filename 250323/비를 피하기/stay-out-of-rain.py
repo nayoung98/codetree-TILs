@@ -11,14 +11,6 @@ visited = [[False] * n for _ in range(n)]
 time = [[-1] * n for _ in range(n)]
 q = deque()
 
-# 비를 피할 수 있는 곳에서 bfs
-for i in range(n):
-    for j in range(n):
-        if grid[i][j] == 3:
-            q.append((i, j))
-            visited[i][j] = True
-            time[i][j] = 0
-
 # 격자 내 확인
 def in_range(x, y):
     return 0 <= x < n and 0 <= y < n
@@ -43,7 +35,19 @@ def bfs():
                 visited[nx][ny] = True
                 q.append((nx, ny))
                 time[nx][ny] = time[x][y] + 1
+
+# 비를 피할 수 있는 곳에서 bfs
+for i in range(n):
+    for j in range(n):
+        if grid[i][j] == 3:
+            q.append((i, j))
+            visited[i][j] = True
+            time[i][j] = 0
+            
+# 실행
 bfs()
+
+# 출력
 for i in range(n):
     for j in range(n):
         # 사람 있는 곳
