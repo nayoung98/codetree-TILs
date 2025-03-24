@@ -5,30 +5,32 @@ from collections import deque
 # 입력
 n = int(input())
 q = deque()
-time = [0] * (n + 1)
-visited = [False] * (n + 1)
+time = [0] * 4000004 # 10000001 * 4(연산 종류)
+visited = [False] * 4000004
+
+def push(nx, x):
+    q.append(nx)
+    visited[nx] = True
+    time[nx] = time[x] + 1
 
 def bfs():
     while q:
         x = q.popleft()
+
         if x == 1:
             return
+
         if x % 2 == 0 and not visited[x//2]:
-            q.append(x//2)
-            visited[x//2] = True
-            time[x//2] = time[x] + 1
+            push(x//2, x)
+
         if x % 3 == 0 and not visited[x//3]:
-            q.append(x//3)
-            visited[x//3] = True
-            time[x//3] = time[x] + 1
+            push(x//3, x)
+
         if not visited[x - 1]:
-            q.append(x - 1)
-            visited[x - 1] = True
-            time[x - 1] = time[x] + 1
-        if x != n and not visited[x + 1]:
-            q.append(x + 1)
-            visited[x + 1] = True
-            time[x + 1] = time[x] + 1
+            push(x- 1, x)
+
+        if not visited[x + 1]:
+            push(x + 1, x)
 
 # 실행
 q.append(n)
