@@ -43,7 +43,6 @@ for num in nums_info:
                 idx = tmp_grid[i][j].index(num)
                 flag = True
                 move_num(i, j, idx)
-                # print(tmp_grid)
                 break
         if flag:
             break
