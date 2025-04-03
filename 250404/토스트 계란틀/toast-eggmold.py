@@ -23,8 +23,10 @@ def can_go(x, y, nx, ny):
 
 def bfs():
     dxs, dys = [-1, 0, 1, 0], [0, 1, 0, -1]
-    result = []
+    # visited = [[False] * n for _ in range(n)]
 
+    # global result
+    result = []
     while q:
         x, y = q.popleft()
         result.append((x, y))
@@ -39,22 +41,38 @@ def bfs():
 
 # grid 돌면서 상하좌우 인접한 곳의 차 계산
 cnt = 0
+tmp_grid = [[0] * n for _ in range(n)]
+for i in range(n):
+        for j in range(n):
+            tmp_grid[i][j] = grid[i][j]
+
+def update_grid():
+    global grid    
+    for i in range(n):
+        for j in range(n):
+            grid[i][j] = tmp_grid[i][j]
+
 for _ in range(2000):
     flag = False
+    visited = [[False] * n for _ in range(n)]
     for i in range(n):
         for j in range(n):
             q.append((i, j))
             visited[i][j] = True
-            
             eggs = bfs()
+
             if len(eggs) >= 2:
                 flag = True
                 egg_sum = 0
                 for x, y in eggs:
                     egg_sum += grid[x][y]
                 for x, y in eggs:
-                    grid[x][y] = int(egg_sum / len(eggs))
+                    tmp_grid[x][y] = int(egg_sum / len(eggs))
+    update_grid()
+
     if flag:
         cnt += 1
-        
+    else:
+        break
+
 print(cnt)
