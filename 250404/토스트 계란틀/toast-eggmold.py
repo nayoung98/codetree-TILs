@@ -23,9 +23,6 @@ def can_go(x, y, nx, ny):
 
 def bfs():
     dxs, dys = [-1, 0, 1, 0], [0, 1, 0, -1]
-    # visited = [[False] * n for _ in range(n)]
-
-    # global result
     result = []
     while q:
         x, y = q.popleft()
