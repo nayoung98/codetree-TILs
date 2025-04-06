@@ -1,6 +1,5 @@
 # 입력
 from collections import deque
-from wsgiref.util import request_uri
 
 R, C, K = map(int, input().split()) # 행, 열, 정령의 수
 golems = [list(map(int, input().split())) for _ in range(K)] # 골렘이 출발하는 열 (ci), 골렘의 출구 방향 정보 (di)
