@@ -1,7 +1,3 @@
-############ 변수 정리 ############
-
-
-
 from collections import deque
 
 k, m = map(int, input().split()) # 탐사의 반복 횟수, 벽면에 적힌 유물 조각의 개수
@@ -26,13 +22,8 @@ def can_go(x, y):
             not visited[x][y]
 
 def bfs(num):
-    # cnt: bfs의 depth (모이는 유물 조각의 개수)
     global grid
 
-    # new_grid = [[0] * 5 for _ in range(5)]
-    # for i in range(5):
-    #     for j in range(5):
-    #         new_grid[i][j] = grid[i][j]
     new_grid = [row[:] for row in grid]
     cnt = 0
     dxs, dys = [-1, 0, 1, 0], [0, -1, 0, 1]
@@ -45,20 +36,14 @@ def bfs(num):
         for dx, dy in zip(dxs, dys):
             nx, ny = x + dx, y + dy
             if can_go(nx, ny) and grid[nx][ny] == num:
-                # positions.append((nx, ny))
-                # new_grid[x][y], new_grid[nx][ny] = 0, 0 # 유물 사라짐 (grid에 바로 저장하면 값이 바뀌니까 new_grid에 저장 해놓고 다시 옮기기)
                 q.append((nx, ny))
                 visited[nx][ny] = True
-                # cnt += 1
 
     if cnt >= 3:
         for i, j in positions:
             grid[i][j] = 0
-        # # new_grid의 값 저장
+        # new_grid의 값 저장
         new_grid = [row[:] for row in grid]
-        # for i in range(5):
-        #     for j in range(5):
-        #         grid[i][j] = new_grid[i][j]
         return cnt # 해당 위치에서 (i, j) 유물의 개수
     else:
         return 0
@@ -133,52 +118,43 @@ def make_newgrid(i, j, rotated_grid):
 new_cnt = 0
 answer = []
 for _ in range(k):
-    # print(f'phase: {_}')
     total_cnt = 0
-    # print(grid)
+
     # 1. 탐사 진행
     results = []
     # 중심 좌표 선택
     for i in range(1, 4): # 1, 4
         for j in range(1, 4):
             tmp_grid = make_tmpgrid(i, j)
-            ######### 3가지 각도로 회전 -> 각각의 회전에 따른 유물 개수 계산 #########
-            ## 90도 회전
+
+            # 90도 회전
             rotated_grid = rotate_90(tmp_grid)
             make_newgrid(i, j, rotated_grid)
-            # bfs 돌면서 유물 개수 저장
             visited = [[False] * 5 for _ in range(5)]
-
             results.append((count_nums(visited), 90, i, j))
-            # 격자 초기화
             update_grid(init_grid)
-            # update_grid()
 
-            ## 180도 회전 -> 90도 회전 * 2
+            # 180도 회전 -> 90도 회전 * 2
             rotated_grid = rotate_90(rotated_grid)
             make_newgrid(i, j, rotated_grid)
             visited = [[False] * 5 for _ in range(5)]
-
             results.append((count_nums(visited), 180, i, j))
             update_grid(init_grid)
-            # update_grid()
 
-            ## 270도 회전 -> 90도 회전 * 3
+            # 270도 회전 -> 90도 회전 * 3
             rotated_grid = rotate_90(rotated_grid)
             make_newgrid(i, j, rotated_grid)
             visited = [[False] * 5 for _ in range(5)]
-
             results.append((count_nums(visited), 270, i, j))
             update_grid(init_grid)
-            # update_grid()
             
     # 회전 목표에 맞게 정렬
     results.sort(lambda x: (-x[0], x[1], x[3], x[2]))
-    # print(results)
+    
     # 2. 유물 획득
     # 회전 결과 출력
     max_num, rotate, mx, my = results[0]
-    # print(f'max_num, rotate, mx, my: {results[0]}')
+
     # 회전 했을 때 유물의 최대 개수가 0이면 더이상 진행 불가능하니까 멈춤
     if max_num == 0:
         answer.append(0)
@@ -195,7 +171,7 @@ for _ in range(k):
         make_newgrid(mx, my, rotated_grid)
     else: # 270
         tmp_grid = make_tmpgrid(mx, my)
-        rotated_grid = rotate_90(tmp_grid)
+        # rotated_grid = rotate_90(tmp_grid)
         rotated_grid = rotate_90(rotate_90(rotate_90(tmp_grid)))
         make_newgrid(mx, my, rotated_grid)
 
@@ -203,8 +179,7 @@ for _ in range(k):
     visited = [[False] * 5 for _ in range(5)]
     tmp_num = count_nums(visited)  # 유물 사라짐
     total_cnt += tmp_num
-    # print(f'tmp_num: {tmp_num}')
-    # print(grid)
+
     # 새로운 조각 생기기
     for j in range(5):
         for i in range(4, -1, -1):
@@ -224,8 +199,7 @@ for _ in range(k):
         visited = [[False] * 5 for _ in range(5)]
         tmp_num = count_nums(visited)
         total_cnt += tmp_num
-        # print(f'tmp_num: {tmp_num}')
-        # print(grid)
+        
         if tmp_num == 0: # 유물 연쇄 획득 중단
             # 비워진 부분 다시 채워야됨 (유물의 조각으로 채우는게 아니고, 원래 값이 다시 들어가야됨)
             for i in range(5):
@@ -237,7 +211,6 @@ for _ in range(k):
                     init_grid[i][j] = grid[i][j]
             answer.append(total_cnt)
             total_cnt = 0 
-            # print(grid)
             break
         else:
             # 새로운 조각 생기기
@@ -246,8 +219,7 @@ for _ in range(k):
                     if grid[i][j] == 0:
                         grid[i][j] = nums[new_cnt]
                         new_cnt += 1
-            # print(grid)
-# print(answer)
+                        
 for ans in answer:
     if ans != 0:
         print(ans, end = ' ')
