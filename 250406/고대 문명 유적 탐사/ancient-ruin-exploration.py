@@ -29,29 +29,36 @@ def bfs(num):
     # cnt: bfs의 depth (모이는 유물 조각의 개수)
     global grid
 
-    new_grid = [[0] * 5 for _ in range(5)]
-    for i in range(5):
-        for j in range(5):
-            new_grid[i][j] = grid[i][j]
-
-    cnt = 1
+    # new_grid = [[0] * 5 for _ in range(5)]
+    # for i in range(5):
+    #     for j in range(5):
+    #         new_grid[i][j] = grid[i][j]
+    new_grid = [row[:] for row in grid]
+    cnt = 0
     dxs, dys = [-1, 0, 1, 0], [0, -1, 0, 1]
-    
+    positions = []
+
     while q:
         x, y = q.popleft()
+        positions.append((x, y))
+        cnt += 1
         for dx, dy in zip(dxs, dys):
             nx, ny = x + dx, y + dy
             if can_go(nx, ny) and grid[nx][ny] == num:
-                new_grid[x][y], new_grid[nx][ny] = 0, 0 # 유물 사라짐 (grid에 바로 저장하면 값이 바뀌니까 new_grid에 저장 해놓고 다시 옮기기)
+                # positions.append((nx, ny))
+                # new_grid[x][y], new_grid[nx][ny] = 0, 0 # 유물 사라짐 (grid에 바로 저장하면 값이 바뀌니까 new_grid에 저장 해놓고 다시 옮기기)
                 q.append((nx, ny))
                 visited[nx][ny] = True
-                cnt += 1
+                # cnt += 1
 
     if cnt >= 3:
-        # new_grid의 값 저장
-        for i in range(5):
-            for j in range(5):
-                grid[i][j] = new_grid[i][j]
+        for i, j in positions:
+            grid[i][j] = 0
+        # # new_grid의 값 저장
+        new_grid = [row[:] for row in grid]
+        # for i in range(5):
+        #     for j in range(5):
+        #         grid[i][j] = new_grid[i][j]
         return cnt # 해당 위치에서 (i, j) 유물의 개수
     else:
         return 0
@@ -68,7 +75,6 @@ def count_nums(visited):
             result += bfs(num)
     return result
 
-# def update_grid():
 def update_grid(init_grid):
     global grid, visited
     
@@ -141,6 +147,8 @@ for _ in range(k):
             rotated_grid = rotate_90(tmp_grid)
             make_newgrid(i, j, rotated_grid)
             # bfs 돌면서 유물 개수 저장
+            visited = [[False] * 5 for _ in range(5)]
+
             results.append((count_nums(visited), 90, i, j))
             # 격자 초기화
             update_grid(init_grid)
@@ -149,6 +157,8 @@ for _ in range(k):
             ## 180도 회전 -> 90도 회전 * 2
             rotated_grid = rotate_90(rotated_grid)
             make_newgrid(i, j, rotated_grid)
+            visited = [[False] * 5 for _ in range(5)]
+
             results.append((count_nums(visited), 180, i, j))
             update_grid(init_grid)
             # update_grid()
@@ -156,6 +166,8 @@ for _ in range(k):
             ## 270도 회전 -> 90도 회전 * 3
             rotated_grid = rotate_90(rotated_grid)
             make_newgrid(i, j, rotated_grid)
+            visited = [[False] * 5 for _ in range(5)]
+
             results.append((count_nums(visited), 270, i, j))
             update_grid(init_grid)
             # update_grid()
