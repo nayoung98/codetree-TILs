@@ -78,21 +78,20 @@ def check_ice(x, y):
 
 # 실행
 rotated_grid = [[0] * (2**n) for _ in range(2**n)]
-for level in levels: # q번 반복
+for level in levels: 
     # 1. 회전 레벨에 맞게 1번 회전시키기
     if level == 0: # 레벨 0이면 변화 없음
         rotated_grid = grid
     else: 
         total, length = 2**n, 2**level
-        num = int(total/length) 
-
+        num = int(total/length)
+        
         for l in range(num):
             rs, re = length * l, length * (l + 1)
             for k in range(num):
                 cs, ce = length * k, length * (k + 1)
-
                 # 선택한 각각의 격자를 4등분해서 회전하기
-                new_grid = rotate_minigrid(length, rs, re, cs, ce)
+                new_grid = rotate_minigrid(length, rs, re, cs, ce)      
 
                 # 원래 격자에 집어넣기
                 row = 0
@@ -103,8 +102,8 @@ for level in levels: # q번 반복
                         col += 1
                     row += 1
 
-    # 격자 복사
     tmp_grid = [[0] * (2 ** n) for _ in range(2 ** n)]
+    # 격자 복사
     for i in range(2 ** n):
         for j in range(2 ** n):
             tmp_grid[i][j] = rotated_grid[i][j]
@@ -123,7 +122,8 @@ for level in levels: # q번 반복
         for j in range(2**n):
             grid[i][j] = tmp_grid[i][j]
 
-# 출력
+# 출력 (bfs로 얼음 있는 곳 연결해서 cnt, 얼음 있는 곳의 rotated_grid 값 더하기)
+result, max_ice = 0, 0
 for i in range(2 ** n):
     for j in range(2 ** n):
         if grid[i][j] != 0:
@@ -132,9 +132,9 @@ for i in range(2 ** n):
             visited[i][j] = True
             positions = bfs()
             max_ice = max(max_ice, len(positions))
-
 print(result)
 if max_ice == 0:
     print(0)
 else:
     print(max_ice)
+
