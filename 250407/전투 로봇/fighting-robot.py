@@ -38,7 +38,6 @@ while True:
                 q.append((i, j))
                 visited[i][j] = True
                 bfs(level)
-                # time = bfs(level, time) # 몬스터 찾으러 이동
                 grid[i][j] = 0 # 이동할거니까 자리 비우기
 
     for i in range(n):
@@ -46,16 +45,10 @@ while True:
             # 없앨 몬스터 기록
             if grid[i][j] != 0 and time[i][j] != 0 and grid[i][j] < level:
                 monsters.append((time[i][j], i, j)) # 걸리는 시간, 행, 열
-                # print(time)
-
-    # print(time)
-    # print(visited)
 
     # 없앨 몬스터 이동 규칙에 맞게 정렬
     monsters.sort(key=lambda x: (x[0], x[1], x[2]))
-    # print(monsters)
 
-    # 3. 1, 2 반복
     # 더 이상 없앨 몬스터가 없으면 종료
     if len(monsters) == 0:
         break
@@ -65,7 +58,7 @@ while True:
         total_time += tmp_time # 몬스터 없애러 가는데 걸리는 시간 추가
         cnt += 1
 
-        # 레벨업 체크용 변수 (이게 level과 같아지면 level += 1)
+        # 레벨업 체크용 변수
         if cnt == level:
             level += 1
             cnt = 0
