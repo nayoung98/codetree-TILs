@@ -37,65 +37,8 @@ def bfs(visited, distance):
                 visited[nx][ny] = True
                 distance[nx][ny] = distance[x][y] + 1
 
-def bfs_target(visited, distance, tx, ty):
-    # global visited, distance
-    dxs, dys = [-1, 0, 1, 0], [0, -1, 0, 1]
-    while q:
-        x, y = q.popleft()
-        if tx == x and ty == y: # 승객의 목적지에 도착하면 더이상 계산 안함
-            break
-        for dx, dy in zip(dxs, dys):
-            nx, ny = x + dx, y + dy
-            if can_go(nx, ny):
-                q.append((nx, ny))
-                visited[nx][ny] = True
-                distance[nx][ny] = distance[x][y] + 1
-
-# # 1. 택시의 현재 위치로부터 승객들의 최단거리 bfs로 구하기 -> 우선 순위에 맞게 승객 탑승
-# # 택시의 현재 위치 (0-idx로 바꿈)
-# x, y = x - 1, y - 1
-# q.append((x, y))
-# visited[x][y] = True
-#
-# # 실행
-# bfs()
-#
-# # 승객들의 최단 거리 구하기
-# target = []
-# for xs, ys, xe, ye in info:
-#     xs, ys, xe, ye = xs - 1, ys - 1, xe - 1, ye - 1
-#     target.append((distance[xs][ys], xs, ys, xe, ye))
-# target.sort(key=lambda x: (x[0], x[1], x[2]))
-#
-# # 우선 순위에 맞게 승객 탑승 -> 배터리 계산 (이때 0 이하가 되면 -1 출력 및 종료)
-# d, xs, ys, xe, ye = target[0]
-# x, y = xs, ys # 택시의 위치 업뎃 (승객이 탑승하는 곳으로)
-# c -= d # 배터리 계산
-# # if c <= 0:
-# #     break
-#
-# # 2. 목적지로 택시 이동 -> 배터리 계산 -> 배터리 충전
-# # 목적지까지로 이동하는 최단 거리 계산을 위해 bfs 수행
-# # 초기화
-# visited = [[False] * n for _ in range(n)]
-# distance = [[0] * n for _  in range(n)]
-#
-# # bfs 수행
-# q.append((x, y))
-# visited[x][y] = True
-# bfs_target(xe, ye)
-#
-# # 목적지 도착
-# x, y = xe, ye # 택시 위치 업뎃
-# # 배터리 계산
-# d = distance[x][y]
-# c = c - d + d * 2
 def init_bfs():
     global visited, distance
-    # for i in range(n):
-    #     for j in range(n):
-    #         visited[i][j] = False
-    #         distance[i][j] = 0
     visited = [[False] * n for _ in range(n)]
     distance = [[0] * n for _  in range(n)]
 
@@ -110,23 +53,21 @@ for _ in range(m):
     visited[x][y] = True
     bfs(visited, distance)
     # print(distance)
+    # print(visited)
 
     # 승객들의 최단 거리 구하기
     target = []
     for idx, (xs, ys, xe, ye) in enumerate(info):
         if xs == -1 and ys == -1: # 이미 탑승한 승객은 안태움
             continue
-        if distance[xs][ys] != 0:
-            target.append((distance[xs][ys], xs, ys, xe, ye, idx))
-
-    if len(target) == 0: # 갈 수 있는 곳이 없음
-        move = False
-        break
+        # if distance[xs][ys] != 0:
+        target.append((distance[xs][ys], xs, ys, xe, ye, idx))
+    # print(distance)
+    # print(target)
 
     target.sort(key=lambda x: (x[0], x[1], x[2]))
-
-    # 모든 승객들의 거리가 0이라면 막혀서 갈 수 없다는 것을 의미하므로
     # print(target)
+
     # 우선 순위에 맞게 승객 탑승 -> 배터리 계산 (이때 0 이하가 되면 -1 출력 및 종료)
     d, xs, ys, xe, ye, idx = target[0] # 승객이 있는 곳 까지의 거리, 출발지, 목적지, 손님 번호
     # print(d, xs, ys, xe, ye, idx)
