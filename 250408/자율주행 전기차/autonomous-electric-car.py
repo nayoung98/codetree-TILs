@@ -41,73 +41,62 @@ def init_bfs():
     visited = [[False] * n for _ in range(n)]
     distance = [[0] * n for _  in range(n)]
 
-# 3. 1~2 반복
 move = True
 for _ in range(m):
-    # 1. 택시의 현재 위치로부터 승객들의 최단거리 bfs로 구하기 -> 우선 순위에 맞게 승객 탑승
-    # 초기 시작
-    # print(x, y, c) # 처음 택시의 위치, 배터리
-
+    # 1. 택시의 현재 위치로부터 승객들의 최단거리 구하기 -> 우선 순위에 맞게 승객 탑승
     q.append((x, y))
     visited[x][y] = True
     bfs(visited, distance)
-    # print(distance)
-    # print(visited)
 
     # 승객들의 최단 거리 구하기
     target = []
     for idx, (xs, ys, xe, ye) in enumerate(info):
         if xs == -1 and ys == -1: # 이미 탑승한 승객은 안태움
             continue
-        # if distance[xs][ys] != 0:
+
         if visited[xe][ye]: # 목적지까지 갈 수 있어야 함
             target.append((distance[xs][ys], xs, ys, xe, ye, idx))
-    # print(distance)
-    # print(target)
+    
+    # 이동 불가능
     if len(target) == 0:
         move = False
         break
     target.sort(key=lambda x: (x[0], x[1], x[2]))
-    # print(target)
 
-    # 우선 순위에 맞게 승객 탑승 -> 배터리 계산 (이때 0 이하가 되면 -1 출력 및 종료)
+    # 우선 순위에 맞게 승객 탑승
     d, xs, ys, xe, ye, idx = target[0] # 승객이 있는 곳 까지의 거리, 출발지, 목적지, 손님 번호
-    # print(d, xs, ys, xe, ye, idx)
+
     x, y = xs, ys # 택시의 위치 업뎃 (승객이 탑승하는 곳으로)
-    # 탑승한 승객은 지우기
-    info[idx][:2] = -1, -1
+    info[idx][:2] = -1, -1 # 탑승한 승객은 지우기
     c -= d # 배터리 계산
-    # print(c)
+    
     if c <= 0:
         move = False
         break
 
     # 2. 목적지로 택시 이동 -> 배터리 계산 -> 배터리 충전
-    # 목적지까지로 이동하는 최단 거리 계산을 위해 bfs 수행
     # 초기화
     init_bfs()
 
-    # bfs 수행
+    # 목적지까지로 이동하는 최단 거리 계산
     q.append((x, y))
     visited[x][y] = True
     bfs(visited, distance)
-    # print(distance)
+    
     # 목적지 도착
     x, y = xe, ye # 택시 위치 업뎃
-
     d = distance[x][y]
-    # 이동 중 배터리 계싼
-    c -= d
-    # print(c)
+    c -= d # 이동 중 배터리 계산
+    
     if c < 0:
         move = False
         break
+
     # 배터리 충전
     c += d * 2
-    # print(c)
-    # 다 끝나면 visitied, distance 초기화
+    
+    # 초기화
     init_bfs()
-    # print(info)
 
 # 출력
 if move:
