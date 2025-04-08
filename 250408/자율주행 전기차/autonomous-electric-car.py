@@ -1,5 +1,4 @@
 from collections import deque
-from traceback import print_tb
 
 # 입력
 n, m, c = map(int, input().split()) # 격자의 크기: n, 승객의 수: m, 초기 배터리 충전량: c
@@ -61,10 +60,13 @@ for _ in range(m):
         if xs == -1 and ys == -1: # 이미 탑승한 승객은 안태움
             continue
         # if distance[xs][ys] != 0:
-        target.append((distance[xs][ys], xs, ys, xe, ye, idx))
+        if visited[xe][ye]: # 목적지까지 갈 수 있어야 함
+            target.append((distance[xs][ys], xs, ys, xe, ye, idx))
     # print(distance)
     # print(target)
-
+    if len(target) == 0:
+        move = False
+        break
     target.sort(key=lambda x: (x[0], x[1], x[2]))
     # print(target)
 
