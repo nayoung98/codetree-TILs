@@ -24,16 +24,25 @@ for idx, (x, y) in enumerate(targets):
     x, y = x - 1, y - 1
     targets[idx][:] = x, y
 
+
 def in_range(x, y):
     return 0 <= x < n and 0 <= y < n
 
 def can_go(x, y, idx): # 격자 내 & 방문 x & 갈 수 있는 곳
     return 0 <= x < n and 0 <= y < n and \
             not visited[x][y] and \
-            (abs(grid[x][y]) == (idx + 1) or grid[x][y] == 0) # 본인은 갈 수 있음 or 비어있는 곳
+            (abs(grid[x][y]) == (idx + 1) or grid[x][y] >= 0) # 본인은 갈 수 있음 or 비어있는 곳
 
 def bfs(idx):
     global route, visited, distance
+    # q = deque()
+    # q.append((sx, sy))
+    # distance = [[0] * n for _ in range(n)]
+    # visited = [[False] * n for _ in range(n)]
+    # route = [[None] * n for _ in range(n)]
+
+    # visited[sx][sy] = True
+
     dxs, dys = [-1, 0, 0, 1], [0, -1, 1, 0] # 우선 순위
     while q:
         x, y = q. popleft()
@@ -55,13 +64,14 @@ def init():
 def move_store(idx, x, y):
     global route, visited, distance
 
-    # 초기화
+    # # 초기화
     init()
 
     # bfs 돌면서 최단 거리 계산
     q.append((x, y))
     visited[x][y] = True
     bfs(idx)
+    # bfs(x, y, idx)
 
     px, py = people[idx]  # t번 사람의 현재 위치
     # print(px, py)
@@ -77,16 +87,28 @@ def move_basecamp(t):
     basecamp = []
     idx = t
     tx, ty = targets[idx]  # 자신이 가고 싶은 편의점 (0-idx)
+
+    # # 초기화
+    init()
+    # 편의점 기준 bfs
+    q.append((tx, ty))
+    visited[tx][ty] = True
+    # bfs(tx, ty, idx)
+    bfs(idx)
+    # print(idx)
+    # print(distance)
+
     for i in range(n):
         for j in range(n):
             if grid[i][j] == 1: # 베캠이라면
-                # 초기화
-                init()
-                # 자신이 가고 싶은 편의점과 가장 가까운 베캠 구하기
-                q.append((i, j))
-                visited[i][j] = True
-                bfs(idx)
-                basecamp.append((distance[tx][ty], i, j))
+                # # 초기화
+                # init()
+                # # 자신이 가고 싶은 편의점과 가장 가까운 베캠 구하기
+                # q.append((i, j))
+                # visited[i][j] = True
+                # bfs(idx)
+                basecamp.append((distance[i][j], i, j))
+    # print(basecamp)
     basecamp.sort(key=lambda x: (x[0], x[1], x[2]))
 
     # 해당 베이스캠프로 옮기기
