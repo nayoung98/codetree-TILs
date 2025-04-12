@@ -30,15 +30,16 @@ def get_dst(x, y, d):
             x += 1
         # 서쪽 회전, 이동
         elif can_move(x - 1, y - 1) and can_move(x, y - 2) and can_move(x + 1, y - 2) and can_move(x + 1, y - 1) and can_move(x + 2, y - 1):
+            x += 1
             y -= 1
             d = (d - 1) % 4
         # 동쪽 회전, 이동
         elif can_move(x - 1, y + 1) and can_move(x, y + 2) and can_move(x + 1, y + 1) and can_move(x + 1, y + 2) and can_move(x + 2, y + 1):
+            x += 1
             y += 1
             d = (d + 1) % 4
         else:
-            break
-    return x, y, d
+            return x, y, d
 
 def golem2grid(i, x, y, d):
     # 골렘 표시
@@ -59,32 +60,31 @@ def can_go(x, y, golem): # 격자 내 & not 방문 & 골렘 안에서만 움직�
 def bfs():
     global max_row
     max_row = 0
+
     while q:
         x, y = q.popleft()
         golem = grid[x][y]
-
         for dx, dy in zip(dxs, dys):
             nx, ny = x + dx, y + dy
             if can_go(nx, ny, golem):
                 q.append((nx, ny))
                 visited[nx][ny] = True
-                max_row = max(max_row, nx)
+                max_row = max(max_row, nx) # 정령의 최종 위치 (가장 큰 행) 출력
 
-# 정령의 최종 위치 (가장 큰 행) 출력
-def get_location():
-    for i in range(r - 1, -1, -1):
-        for j in range(c):
-            if visited[i][j]:
-                return i
+# 골렘이 숲 밖에 있는지 검사
+def is_golem(x, y):
+    if grid[x][y] == 0 and in_range(x - 1, y) and in_range(x, y) and in_range(x + 1, y) and in_range(x, y - 1) and in_range(x, y + 1):
+        return True
+    return False
 
 # 실행
 result = 0
 for i, (ci, di) in enumerate(golems):
     # 1. 골렘의 최종 위치 구하기
-    x, y, d = get_dst(0, ci, di)
+    x, y, d = get_dst(-2, ci, di)
 
     # 아무데도 못가면 숲 초기화함 (골렘 다 빠져나가고 다시 시작)
-    if x == 0 and y == ci and d == di:
+    if not is_golem(x, y):
         grid = [[0] * c for _ in range(r)]
         continue
 
