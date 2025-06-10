@@ -118,7 +118,6 @@ def night_routine():
             # 전파 여부 확인 (전파 대상이 전파자와 신봉 음식이 같으면 pass, 다르면 전파 진행)
             if origin_food == F[nr][nc]:
                 pr, pc = nr, nc # 한 칸 이동
-                # flag = False
                 continue
 
             # 전파 진행되는 경우, 강한 전파 or 약한 전파 확인
@@ -143,8 +142,6 @@ def night_routine():
             # 한 칸 이동
             pr, pc = nr, nc
 
-        # print(B)
-        # print(F)
         phase += 1
 
 def print_food():
@@ -169,13 +166,13 @@ def print_food():
 
 ## 5. 2~4를 t만큼 반복
 for _ in range(t):
-    # print(f'Day: {_ + 1}')
     # 아침 실행
     morning_routine()
 
     # 대표자 초기화
     presidents = []
     visited = [[False] * n for _ in range(n)]
+    
     # 점심 실행
     for i in range(n):
         for j in range(n):
@@ -198,4 +195,3 @@ for _ in range(t):
 
     # 출력
     print_food()
-
