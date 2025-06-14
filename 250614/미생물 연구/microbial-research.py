@@ -49,17 +49,6 @@ def chk_germs(idx):
 def put_routine(idx, r1, c1, r2, c2):
     chk_germs(idx)
     put_germs(idx, r1, c1, r2, c2)
-    # print(f"미생물 투입 후: {grid}")
-    #
-    # ##############3 현재까지 투입된 모든 미생물에 대해 계산하도록 바꿔야됨
-    # component = chk_germs(idx)
-    # print(f"component: {component}")
-    # # 미생물이 갈라졌다면 삭제하기
-    # if component >= 2:
-    #     for row in range(n):
-    #         for col in range(n):
-    #             if grid[row][col] == idx:
-    #                 grid[row][col] = -1  # 삭제
 
 # 3. 배양 용기 이동: 새로운 배양 용기 생성 -> 기존 배양 용기에서 미생물들의 넓이 계산 -> 우선 순위(넓이 큰거 > 가장 먼저 투입된 것)으로 배치 (최대한 x가 작은 곳 > y가 작은곳) -> 어떤 곳에도 둘 수 없으면 삭제
 # 새로운 배양 용기
@@ -151,7 +140,6 @@ def get_total_area():
                 if grid[nr][nc] != grid[row][col]:
                     adj_list.append(sorted([grid[row][col], grid[nr][nc]]))
     adj_list = list(set(map(tuple, adj_list)))
-    # print((adj_list))
 
     # 무리 별 넓이 계산하기: 저장된게 2개일때만 넓이 계산, 1개인 경우는 0
     total_area = 0
@@ -169,16 +157,10 @@ def get_total_area():
                     areaA += 1
                 elif grid[row][col] == B:
                     areaB += 1
-        # print(areaA, areaB)
 
         # 다 더해서 리턴
         total_area += (areaA * areaB)
-    # print(total_area)
     return total_area
-
-# def cal_routine():
-#     init_grid()
-#     get_total_area()
 
 # 5. 2~4의 과정을 Q번 반복
 for i in range(Q):
@@ -187,9 +169,7 @@ for i in range(Q):
     # 현재까지 투입된 모든 미생물에 대해 컴포넌트 계산 후 갈라져 있으면 삭제함
     for id in range(i + 1):
         visited = [[False] * n for _ in range(n)]
-
         component = chk_germs(id)
-        # print(f"component: {component}")
 
         # 미생물이 갈라졌다면 삭제하기
         if component >= 2:
@@ -204,7 +184,4 @@ for i in range(Q):
 
     init_grid()
     total_area = get_total_area()
-
-    # total_area = cal_routine()
     print(total_area)
-    # print(grid)
